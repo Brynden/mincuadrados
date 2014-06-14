@@ -69,7 +69,7 @@ def subm(matriz,i,j):
 def mincuad(a,b):
     ata=mult((transp(a)),a)
     atb=mult((transp(a)),b)
-    ata2=linalg.inv(ata)
+    ata2=inversa(ata)
     return(mult(ata2,atb))
 
 
