@@ -93,7 +93,7 @@ def apxrecta(dot):
         print("y = %s * x  + %s " % (str(r[0]),r[1]))
         return(plt.show())
     
-def ingreso (matriz):
+def ingreso (matrizA,matrizB):
     print("Ingrese dimensiones de la matriz(Filas x Columnas) entre 1 y 5")
     while True:
         try:
@@ -107,8 +107,10 @@ def ingreso (matriz):
             else:
                 break
         
-    matriz = empty((filas,columnas))
-
+    matrizA = empty((filas,columnas))
+    matrizB = empty((filas))
+    
+    print ("Ingrese valores de la matriz A: ")
     for i in range(filas):
         for j in range(columnas):
             while True:
@@ -117,25 +119,42 @@ def ingreso (matriz):
                 except ValueError:
                     print("Intentelo nuevamente")
                 else:
-                    matriz[i][j]=valor
+                    matrizA[i][j]=valor
                     break
-    print (matriz)
-    return matriz
 
+    print("Ingrese valores matriz de soluciones: ")
+    for i in range(filas):
+        while True:
+            try:
+                valor=float(input("Elemento %d : " % (i+1) ))
+            except ValueError:
+                print("Intentelo nuevamente")
+            else:
+                matrizB[i]=valor
+                break
+    matrizB=matrizB.reshape(filas,1)
+    print (matrizA,matrizB)
+    return matrizA,matrizB
+
+def ingpto(puntos):
+    pass
+
+    
 print("Aproximacion de Minimos cuadrados \n 1)Aproximacion para sistemas de ecuaciones \n 2) Aproximacion por una recta")
 elije=input()
 print(elije)
 if elije=="1":
-    matrizA=empty((0,0))
-    matrizA=ingreso(matrizA)
-    print("Ingrese matriz de soluciones: ")
-    matrizB=empty((0,0))
-    matrizB=ingreso(matrizB)
-    if matrizB.shape[0]==linalg.matrix_rank(matrizA):# condicion para realizar mincuad
+    matrizA=matrizB=array
+    matrizA,matrizB=ingreso(matrizA,matrizB)
+    if matrizA.shape[1]==linalg.matrix_rank(matrizA):# condicion para realizar mincuad
         print ("las aproximacion por minimos cuadrados es :")
         print (mincuad(matrizA,matrizB))
     else:
-        print("no tiene solucion por minimos cuadrados")
+        print("No tiene solucion por minimos cuadrados")
+
+elif elije=="1":
+    puntos=array
+    puntos=ingpto(puntos)
         
     
     
