@@ -1,26 +1,6 @@
-'''
-    Programa que calcula los mínimos cuadrados de sistemas de ecuaciones
-    y la aproximación de puntos a funciones lineales, cuadráticas y cúbicas 
-
-
- ≈
-
-
-
-    Archivo: trabajo2.py
-    Autores: Felix Perez <perez.felix15@hotmail.com>
-             Hernan Puelles <darkfairth@gmail.com>
-    Fecha inicio: 10/06/2014
-    Fecha ultima modificacion: 15/06/2014
-    Python Version: 3.4.1 x32
-    Modulos: Numpy 1.8.1
-             Matplotlib: 1.3.1
-'''
-
-
-
 from numpy import *
 import matplotlib.pyplot as plt
+set_printoptions(precision=6)
 
 def mult(matriz1,matriz2):
     if matriz1.shape[1] != matriz2.shape[0]:
@@ -253,7 +233,7 @@ def ingpto(puntos):
     return(puntos,len(unique(puntos[:,0])))
 
     
-print("Aproximación de Mínimos cuadrados \n 1)Sistemas de ecuaciones \n 2)Aproximacion a partir de puntos")
+print("Aproximación de Minimos cuadrados \n 1)Sistemas de ecuaciones \n 2)Aproximacion a partir de puntos")
 
 while True:
     try:
