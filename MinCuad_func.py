@@ -65,7 +65,13 @@ def mult(matriz1,matriz2):
                     nmatriz[i][j]+= matriz1[i][k]*matriz2[k][j]
         return nmatriz
 
-		
+
+
+#Transpuesta de una matriz, dada una matriz de dimensiones(nxm)
+#creamos una matriz transpuesta tmatriz de dimensiones(mxn)
+#y llenamos cada una de las posiones de tmatriz[i][j] con el valor de matriz original
+#en la posición matriz[j[i], es decir invertimos las filas y columnas
+
 def transp(matriz):
 	tmatriz=zeros((matriz.shape[1],matriz.shape[0]))
 	for i in range(matriz.shape[0]):

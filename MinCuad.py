@@ -77,18 +77,13 @@ def cofactores(matriz):
 
 def inversa(matriz):
     fil,col=matriz.shape
-    if (fil,col)==(2,2):
-        if det(matriz)==0:
-            return (0)
-        else:
-            return (1/det(matriz))*array([[matriz[1][1],-matriz[1][0]],[-matriz[0][1],matriz[0][0]]])
+    if det(matriz)==0:
+        return ("No tiene inversa")
+    elif (fil,col)==(2,2):
+        return (1/det(matriz))*array([[matriz[1][1],-matriz[1][0]],[-matriz[0][1],matriz[0][0]]])
     else:
-        if det(matriz)==0:
-            return(0)
-        else:
-            return (1/det(matriz))*(transp(cofactores(matriz)))
-
-        
+        return (1/det(matriz))*(transp(cofactores(matriz)))
+      
 def subm(matriz,i,j):
     smatriz = zeros((matriz.shape[0]-1,matriz.shape[1]-1))
     ccol = cfil = 0
