@@ -3,13 +3,13 @@
 #Lenguaje: Python 3.4.0
 #Sistema Operativo Windows 
 
-from numpy import *
-import matplotlib.pyplot as plt
-set_printoptions(precision=6)
+from numpy import *                                    #En este trabajo utilizaremos las librerias numpy y matplotlib para el lenguaje python. Con numpy podremos
+import matplotlib.pyplot as plt                        #utilizar herramientas matematicas, en especial las orientadas a matrices (arreglos), y con matplotlib mostraremos
+set_printoptions(precision=6)                          #la graficas de las rectas que se vayan generando al ingresar los puntos el usuario. 
 
-def mult(matriz1,matriz2):                             # Función encargada de realizar la multiplicaión de matrices, Recibe dos matrices y
-    if matriz1.shape[1] != matriz2.shape[0]:           # verifica si es posible realizar  la operación, y de serlo entrega el resultado.
-        return ("Dimensiones incorrectas")
+def mult(matriz1,matriz2):                             # Función encargada de realizar la multiplicaión de matrices, Recibe las dos matrices correspondientes al sistema 
+    if matriz1.shape[1] != matriz2.shape[0]:           # de ecuaciones, luego verifica si es posible realizar  la operación de multiplicaion, y de serlo, la funcion retorna
+        return ("Dimensiones incorrectas")             #el resultado al programa principal.
     else:
         nmatriz = zeros((matriz1.shape[0],matriz2.shape[1]))
         for i in range(matriz1.shape[0]):
@@ -19,17 +19,17 @@ def mult(matriz1,matriz2):                             # Función encargada de r
         return nmatriz
 
 		
-def transp(matriz):                                      #Función que realiza la matriz transpuesta,intercambia filas por columnas
-	tmatriz=zeros((matriz.shape[1],matriz.shape[0])) # y nos entrega la matriz resultante
+def transp(matriz):                                      #La funion recibe una matriz, y devuelve la matriz con su filas interambiadas por columnas,finalmente
+	tmatriz=zeros((matriz.shape[1],matriz.shape[0])) # retorna la nueva matriz al programa principal.
 	for i in range(matriz.shape[0]):
 		for j in range(matriz.shape[1]):
 			tmatriz[j][i] = matriz[i][j]
 	return tmatriz
 
 
-def det(matriz):                                         #Calcula el determinante de la matriz entregada
-    fil=matriz.shape[0]
-    col=matriz.shape[1]
+def det(matriz):                                         #Esta funcion recibe una matriz y obtiene el determinante preguntando primero si filas y columnas son de iguales
+    fil=matriz.shape[0]                                  #a 2,de serlo se realiza la multiplicaion (sarrus para matrices 2x2), si la matriz es de una dimension mayor
+    col=matriz.shape[1]                                  #se llamara a la funcion subm, para crear submatrices y realizar el metodo de LAPLACE.
     d=0
     if fil==2 and col==2:
         return (matriz[0][0]*matriz[1][1]-matriz[0][1]*matriz[1][0])
@@ -39,8 +39,8 @@ def det(matriz):                                         #Calcula el determinant
     return d
 
 
-def cofactores(matriz):                                 #Función que realiza el metodo de los cofactores para las matrices.
-    cmatriz=zeros_like(matriz)
+def cofactores(matriz):                                 #Esta funcion recibe una matriz con el fin de realizar el metodo de los cofactores, el cual necesitaremos 
+    cmatriz=zeros_like(matriz)                          #para realizar la matriz inversa, por lo tanto esta funcion sera llamada a travez de la funcion "inversa"
     fil,col =matriz.shape
     for i in range(fil):
         for j in range(col):
@@ -48,10 +48,10 @@ def cofactores(matriz):                                 #Función que realiza el
     return cmatriz
 
 
-def inversa(matriz):                                    #Esta función calcula la inversa de una matriz nxn
-    fil,col=matriz.shape
-    if (fil,col)==(2,2):
-        if det(matriz)==0:
+def inversa(matriz):                                    #Esta función calcula la inversa de una matriz preguntando la dimension de la matriz, si el numero de
+    fil,col=matriz.shape                                #de filas y columnas es igual a 2 y su determinante es igual a 0 se devuelve un cero, si el determinante no es cero
+    if (fil,col)==(2,2):                                #se aplica la formula de matrices de 2x2 :1/det(a  -d )
+        if det(matriz)==0:                                                                            #(-b  c)  
             return (0)
         else:
             return (1/det(matriz))*array([[matriz[1][1],-matriz[1][0]],[-matriz[0][1],matriz[0][0]]])
@@ -59,12 +59,12 @@ def inversa(matriz):                                    #Esta función calcula l
         if det(matriz)==0:
             return(0)
         else:
-            return (1/det(matriz))*(transp(cofactores(matriz)))
-
-        
-def subm(matriz,i,j):                                       
-    smatriz = zeros((matriz.shape[0]-1,matriz.shape[1]-1))
-    ccol = cfil = 0
+            return (1/det(matriz))*(transp(cofactores(matriz))) #  si la matriz no es de 2x2 y su determinante no es cero se aplica la formula de "cofactores"
+                                                                #   llamando a la funcion cofactores la cual retornara el resultado a la funcion "inversa" y esta a su vez                         
+                                                                # retornara la matriz a la funcion principal     
+def subm(matriz,i,j):                                           
+    smatriz = zeros((matriz.shape[0]-1,matriz.shape[1]-1))      #la funcion subm obtiene submatrices, necesarias para desarrollar el metodo LAPLACE y el metodo de 
+    ccol = cfil = 0                                             #cofactores, retornando una submatriz(smatriz) a las funciones nombradas.
     for fil in range(matriz.shape[0]):
 	    if not fil == i:
 		    for col in range(matriz.shape[1]):
@@ -76,9 +76,9 @@ def subm(matriz,i,j):
     return smatriz
 
 
-def mincuad(a,b):                                   #Esta función se encarga entregarnos la proximacion de minimos cudrados,para ello
-    ata=mult((transp(a)),a)                         #se utilizan la funciones que calculan la multiplicacion, traspuesta e inversa de una matriz
-    atb=mult((transp(a)),b)                         #para luego aplicar la formula realcionada a los sistemas de ecuaciones.
+def mincuad(a,b):                                   #Esta función recibe dos matrices, luego se encarga entregarnos la proximacion de minimos cudrados,mediante la llamada
+    ata=mult((transp(a)),a)                         #de diversar funciones  que calculan la multiplicacion, transpuesta e inversa de una matriz,a su vez en este proceso se realizan
+    atb=mult((transp(a)),b)                         #una serie de comprobaciones a las matrices recibidas, para que finalmente podamos aplicar la formula de sistemas de ecuaciones.
     ata2=inversa(ata)
     return(mult(ata2,atb))
 
@@ -157,9 +157,9 @@ def aprox(pts,grf):                                 #Esta funcion recibe los pun
     plt.legend(loc = 4)            
     plt.show()
     
-def ingreso (matrizA,matrizB):                          #Funcion para ingresar las matrices corresposndientes al sistema de ecuación
-    print("Ingrese dimensiones de la matriz(max 5x5)")
-    while True:
+def ingreso (matrizA,matrizB):                          #Una de las primeras funciones en ser llamada, se encarga de ingresar los datos a la matriz, tambien
+    print("Ingrese dimensiones de la matriz(max 5x5)")  #realiza una comprobacion si los datos no son correctos(enteros) , si hemos ingresado correctamente los datos
+    while True:                                         #se retornara al programa principal la matriz.
         try:
             filas = int(input('Filas:'))
             columnas = int(input('Columnas:'))
@@ -171,7 +171,7 @@ def ingreso (matrizA,matrizB):                          #Funcion para ingresar l
             else:
                 break
         
-    matrizA = empty((filas,columnas))
+    matrizA = empty((filas,columnas))                   #con esta asignacion generamos una matriz vacia,"empty",idealmente para matrices cuyas dimensiones son desconocidas
     matrizB = empty((filas))
     
     print ("Ingrese valores de la matriz A: ")
@@ -203,9 +203,9 @@ def ingreso (matrizA,matrizB):                          #Funcion para ingresar l
     print (matrizB)
     return matrizA,matrizB
 
-def ingpto(puntos):                                 #Funcion encargada de ingresar los puntos para la aproximacion.
-    print("Cuantos puntos desea ingresar: "),
-    while True:
+def ingpto(puntos):                                 #Funcion encargada de ingresar los puntos para la aproximacion, de igual manera que en la funcion"ingreso"
+    print("Cuantos puntos desea ingresar: "),       #se comrprueba que los datos sean correctos(float),tambien como minimo se piden dos puntos
+    while True:                                     #ya que sino, no se podria realizar la grafica,ni mucho menos la recta. 
         try:
             npts=int(input())
         except ValueError:
@@ -217,21 +217,21 @@ def ingpto(puntos):                                 #Funcion encargada de ingres
                 print("Se necesitan al menos 2 puntos!")
             else:
                 break
-    puntos=empty((npts,2))
-    while True:
+    puntos=empty((npts,2))                        #definimos la variable puntos, y le asignamos "empty", similar a lo realizado con las matrices antes de ser
+    while True:                                   #ingresados los datos.
         for i in range(npts):
                 while True:
                     try:
                         valorx=float(input("Coordenada X N° %d : " % (i+1)))
                         valory=float(input("Coordenada Y N° %d : " % (i+1)))
                     except ValueError:
-                        print("Intentelo nuevamente")
+                        print("Intentelo nuevamente")       
                     else:
                         puntos[i][0]=valorx
                         puntos[i][1]=valory
                         break
         if len(unique(puntos[:,0]))<2:
-            print("Se necesitan al menos 2 coordenadas X distintas!")
+            print("Se necesitan al menos 2 coordenadas X distintas!")    #otra condicion importante para poder generar una grafica a partir de puntos.       
         else:
             break
     print(puntos)
@@ -248,31 +248,31 @@ while True:                             #Menu Principa: desde aqui podemos elegi
     else:
         if elije!=1 and elije!=2 and elije !=3:
             print("Ingrese una opción válida")
-        elif elije==1:
-            matrizA=matrizB=array
-            matrizA,matrizB=ingreso(matrizA,matrizB)
-            if matrizA.shape[1]==linalg.matrix_rank(matrizA):
+        elif elije==1:                   #esta funcion nos presentara un menu, el cual se ejecutara hasta que el usuario lo necesite,
+            matrizA=matrizB=array        #se definen las matrices a ser ingresadas eventualmente.
+            matrizA,matrizB=ingreso(matrizA,matrizB) #se envian las matrices a la funcion que ingresara los datos a cada una(por el usuario).
+            if matrizA.shape[1]==linalg.matrix_rank(matrizA):   #(se realiza la comprobacion entre el rango de la matriz A y su N° dec olumnas)
                 print ("Soluciones por minimos cuadrados: ")
-                print (mincuad(matrizA,matrizB))
-            else:
+                print (mincuad(matrizA,matrizB))      #se imprime en pantalla la aproximacion de los minimos cuadrados, llamando a su vez a las funciones 
+            else:                                     #que sea necesario ocupar.
                 print("El rango de la matriz A es distinto al número de columnas. \nNo tiene solución única por minimos cuadrados")
 
 
         elif elije==2:
-            puntos=array
-            puntos,cx=ingpto(puntos)
+            puntos=array  #definimos la variable "puntos" a utilizar para el ingreso de puntos.
+            puntos,cx=ingpto(puntos) 
             grf=0
             sw1=0
             if cx==2:
                 grf=1
-                aprox(puntos,grf)
+                aprox(puntos,grf)   #es llamada la funcion que aproxima los puntos, enviando la variable "puntos y grf"
             elif cx==3:       
                 while sw1==0:
                     print("Aproximar los puntos a: \n 1)Recta \n 2)Función Cuadrática \n 3)Ambas \n 4)Calcular la que mejor aproxime \n 5)Salir")
                     try:
-                        grf=int(input())
+                        grf=int(input())   # segun sea la cantidad de puntos que ingresamos, se nos desplegaran varias opciones de aproximacion de rectas
                     except ValueError:
-                                print("Intentelo nuevamente")
+                                print("Intentelo nuevamente")     # se verificara que la opcion este dentro de las posibilidades.
                     else:
                         if grf!=1 and grf!=2 and grf!=3 and grf!=4 and grf!=5:
                             print("Ingrese una opción válida")
