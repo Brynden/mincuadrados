@@ -1,13 +1,25 @@
 '''
     Programa que calcula los mínimos cuadrados de sistemas de ecuaciones
-    y la aproximación de puntos a funciones lineales, cuadráticas y cúbicas 
+    y la aproximación de puntos a funciones lineales, cuadráticas y cúbicas.
 
+    Archivo: MinCuad.py
+    
+    El usuario elige si desea calcular sistemas de ecuaciones o aproximar a puntos.
 
- ≈
+    *Para sistemas de ecuaciones debera ingresar la cantidad de filas y columnas,
+     luego ingresar la matriz de coeficientes seguida de la matriz de soluciones.
+     Si se pueden calcular los mínimos cuadrados, el programa calculará dicha solución.
 
+    *Para puntos, el usuario ingresa los puntos que desea aproximar, dependiendo de la cantidad
+     de coordenadas "x" distintas el usuario tendra la opción de calcular la aproximación a
+     una recta, a ecuación cuadrática y/o cúbica, además el programa puede calcular cual es
+     la ecuación que mejor se aproxima.
+     
 
+    ---Para información detallada acerca de las operaciones algebraicas asi como comentarios
+    de cada función por favor dirijase al archivo: "MinCuad_func.py"---
 
-    Archivo: trabajo2.py
+     
     Autores: Felix Perez <perez.felix15@hotmail.com>
              Hernan Puelles <darkfairth@gmail.com>
     Fecha inicio: 10/06/2014
@@ -257,13 +269,13 @@ print("Aproximación de Mínimos cuadrados \n 1)Sistemas de ecuaciones \n 2)Apro
 
 while True:
     try:
-        elije=int(input())
+        elige=int(input())
     except ValueError:
         print("Intentelo nuevamente")
     else:
-        if elije!=1 and elije!=2 and elije !=3:
+        if elige!=1 and elige!=2 and elige !=3:
             print("Ingrese una opción válida")
-        elif elije==1:
+        elif elige==1:
             matrizA=matrizB=array
             matrizA,matrizB=ingreso(matrizA,matrizB)
             if matrizA.shape[1]==linalg.matrix_rank(matrizA):
@@ -273,7 +285,7 @@ while True:
                 print("El rango de la matriz A es distinto al número de columnas. \nNo tiene solución única por minimos cuadrados")
 
 
-        elif elije==2:
+        elif elige==2:
             puntos=array
             puntos,cx=ingpto(puntos)
             grf=0
