@@ -4,7 +4,31 @@
 
     Archivo: MinCuad_func.py
 
+    **Para sistemas de ecuaciones:
+    Dada una matriz de coeficientes "A" de orden (nxm) y una matriz de soluciones "B"
+    orden (nx1), el sistema A*X=B tiene solución única mediante mínimos cuadrados
+    si y  sólo si el rango de la matriz A es igual a m, en otras palabras, el número
+    de filas linealmente independientes de A es igual al número de columnas, en definitiva
+    A es una matriz cuadrada y podemos entonces calcular su inversa. Por lo que la solución
+    única mediante mínimos cuadrados es:
+                X≈ [(A.t * A)^(-1)] * A.t * B
+    Donde A.t es la matriz transpuesta de A, y ([]^(-1)) es la matriz inversa
 
+    **Para puntos:
+    Sea un conjunto de puntos (ai,bi) con i= [1,2....n]
+    Si existen al menos m+1 puntos con coordenadas x distintas construimos matricez A de la forma:
+        [1 a1 a1^2 a1^3 ... a1^m]
+    A=  [...                 ...]
+        [1 an an^2 an^3 ... an^m]
+
+        [b1]
+    B=  [..]
+        [bn]
+        
+    Con lo cual resolvemos mediante mínimos cuadrados utilizando la formula previamente descrita.
+    Si m=1 entonces obtenemos la ecuación de la recta
+    Si m=2 una ecuación cuadrática
+    Y si m=3 una ecuacíon cúbica
 
 
     
@@ -23,6 +47,12 @@
 
 
 from numpy import *
+
+
+#Multiplicación de matrices, primero verifica que 2 matrices A(nxm) y B(pxq) sean multiplicables
+#es decir m=p, luego crea una matriz de dimensiones (nxq) y va llenando cada posición [i][j] 
+#con el resultado de la sumatoria de los productos entre cada elemento de las filas[i][..] de la matriz A
+#y las columnas[..][j] de la matriz B
 
 def mult(matriz1,matriz2):
     if matriz1.shape[1] != matriz2.shape[0]:
