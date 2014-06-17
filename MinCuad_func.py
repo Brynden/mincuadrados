@@ -78,8 +78,11 @@ def transp(matriz):
 		for j in range(matriz.shape[1]):
 			tmatriz[j][i] = matriz[i][j]
 	return tmatriz
-
-
+                                                    #(a b)
+#Determinante de una matriz, dada una matriz de 2x2  (c d), realiza el producto de la diagonal principal menos la diagonal
+#secundaria (metodo de Sarrus),es decir, de la forma: (ad)x-(bc).Si la dimension de la matriz es mayor a 2x2
+#la funcion tomara uno por uno cada elemento de la primera fila (matriz[0][j]), e ira asignando el signo(+ o -) correspondiente, 
+#para realizar el producto con una submatriz generada por la funcion "subm".
 def det(matriz):
     fil=matriz.shape[0]
     col=matriz.shape[1]
@@ -91,7 +94,8 @@ def det(matriz):
             d+=matriz[0][j]*(((-1)**(j+2))*(det(subm(matriz,0,j))))
     return d
 
-
+#Cofactores, esta funcion nos permite obtener la matriz de cofactores(cmatriz), sustituyendo en cada termino de  "matriz[i][j]", por el 
+# termino cofactor cmatriz[i][j], que corresponde al determinante de la submatriz con signo correspondiente a la posicion en que se encuentre.
 def cofactores(matriz):
     cmatriz=zeros_like(matriz)
     fil,col =matriz.shape
@@ -99,8 +103,11 @@ def cofactores(matriz):
         for j in range(col):
             cmatriz[i][j]+=((-1)**(i+j+2))*(det(subm(matriz,i,j)))
     return cmatriz
-
-
+                                                                                                              #                           (d -b)  
+#Funcion inversa,nos permite obtener la inversa de nuestra matriz, si la matriz recibida es de dimension 2x2 se aplica la formula: 1/det* (-c a),
+#si las dimensiones de la matriz son mayores a 2x2, se realiza el producto entre "1/det(matriz)" por el la transpuesta de la matriz de cofactores,
+#(primero se llamara al funcion cofactores y la matriz resultante sera recibida por la funcion trans(matriz transpuesta) para realizar el producto
+#inicialmente se analiza si el determinante es igual a cero, de serlo se envia el mensaje "No tiene inversa" , no realizando ninguna otra operacion.                     
 def inversa(matriz):
     fil,col=matriz.shape
     if det(matriz)==0:
@@ -110,7 +117,8 @@ def inversa(matriz):
     else:
         return (1/det(matriz))*(transp(cofactores(matriz)))
 
-        
+
+     
 def subm(matriz,i,j):
     smatriz = zeros((matriz.shape[0]-1,matriz.shape[1]-1))
     ccol = cfil = 0
