@@ -274,7 +274,7 @@ while True:
             matrizA=matrizB=array
             matrizA,matrizB=ingreso(matrizA,matrizB)
             if matrizA.shape[1]==linalg.matrix_rank(matrizA):
-                print ("Soluciones por minimos cuadrados: ")
+                print ("Soluciones por mínimos cuadrados: ")
                 print (mincuad(matrizA,matrizB))
             else:
                 print("El rango de la matriz A es distinto al número de columnas. \nNo tiene solución única por minimos cuadrados")
