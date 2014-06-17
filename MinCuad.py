@@ -22,8 +22,7 @@
      
     Autores: Felix Perez <perez.felix15@hotmail.com>
              Hernan Puelles <darkfairth@gmail.com>
-    Fecha inicio: 10/06/2014
-    Fecha ultima modificacion: 15/06/2014
+    Fecha ultima modificacion: 16/06/2014
     Python Version: 3.4.1 x32
     Modulos: Numpy 1.8.1
              Matplotlib: 1.3.1
@@ -83,7 +82,8 @@ def inversa(matriz):
         return (1/det(matriz))*array([[matriz[1][1],-matriz[1][0]],[-matriz[0][1],matriz[0][0]]])
     else:
         return (1/det(matriz))*(transp(cofactores(matriz)))
-      
+
+        
 def subm(matriz,i,j):
     smatriz = zeros((matriz.shape[0]-1,matriz.shape[1]-1))
     ccol = cfil = 0
