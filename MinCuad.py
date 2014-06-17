@@ -76,7 +76,7 @@ def cofactores(matriz):
 
 def inversa(matriz):
     fil,col=matriz.shape
-    if det(matriz)==0:
+    if det(matriz)==0 and fil!=col:
         return ("No tiene inversa")
     elif (fil,col)==(2,2):
         return (1/det(matriz))*array([[matriz[1][1],-matriz[1][0]],[-matriz[0][1],matriz[0][0]]])
